@@ -1,0 +1,280 @@
+:root{
+  --bg-0:#0a1120;
+  --bg-1:#0f1a30;
+  --bg-2:#16223e;
+  --surface:#182549;
+  --surface-2:#1e2c52;
+  --line:#2b3a63;
+  --gold:#d4af6a;
+  --gold-soft:#c49a54;
+  --gold-dim:#8a713f;
+  --teal:#7fa8b8;
+  --ink:#ece4d3;
+  --ink-dim:#a9b2cc;
+  --ink-faint:#6c7794;
+  --shadow: 0 10px 30px rgba(0,0,0,.45);
+  --radius: 16px;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+
+body{
+  background: radial-gradient(ellipse at 50% -10%, #1a2648 0%, var(--bg-1) 45%, var(--bg-0) 100%);
+  color:var(--ink);
+  font-family:'Noto Naskh Arabic','Noto Nastaliq Urdu',serif;
+  min-height:100vh;
+  position:relative;
+  overflow-x:hidden;
+  -webkit-tap-highlight-color:transparent;
+}
+
+@media (prefers-reduced-motion:no-preference){
+  .moon-loader{ animation: spin 2.2s linear infinite; }
+}
+@keyframes spin{ to{ transform:rotate(360deg);} }
+
+/* ---------- starfield ---------- */
+.stars-bg{
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:
+    radial-gradient(1.5px 1.5px at 10% 12%, rgba(212,175,106,.55), transparent 60%),
+    radial-gradient(1.5px 1.5px at 82% 8%, rgba(212,175,106,.4), transparent 60%),
+    radial-gradient(1px 1px at 65% 22%, rgba(236,228,211,.5), transparent 60%),
+    radial-gradient(1px 1px at 30% 30%, rgba(236,228,211,.35), transparent 60%),
+    radial-gradient(1.5px 1.5px at 92% 40%, rgba(212,175,106,.4), transparent 60%),
+    radial-gradient(1px 1px at 15% 55%, rgba(236,228,211,.3), transparent 60%),
+    radial-gradient(1.5px 1.5px at 50% 65%, rgba(212,175,106,.35), transparent 60%),
+    radial-gradient(1px 1px at 75% 75%, rgba(236,228,211,.3), transparent 60%),
+    radial-gradient(1.5px 1.5px at 25% 85%, rgba(212,175,106,.3), transparent 60%),
+    radial-gradient(1px 1px at 90% 90%, rgba(236,228,211,.25), transparent 60%);
+  opacity:.9;
+}
+
+/* ---------- header ---------- */
+.app-header{
+  position:sticky; top:0; z-index:20;
+  background:linear-gradient(180deg, rgba(10,17,32,.97) 0%, rgba(10,17,32,.94) 70%, rgba(10,17,32,0) 100%);
+  backdrop-filter:blur(6px);
+  padding:14px 16px 10px;
+  border-bottom:1px solid var(--line);
+}
+.header-inner{
+  display:flex; align-items:center; justify-content:center; position:relative;
+  min-height:34px;
+}
+.app-title{
+  font-family:'Noto Nastaliq Urdu',serif;
+  font-weight:700;
+  font-size:1.6rem;
+  margin:0;
+  color:var(--gold);
+  text-align:center;
+  letter-spacing:.5px;
+  text-shadow:0 0 18px rgba(212,175,106,.25);
+}
+.app-subtitle{
+  text-align:center; margin:2px 0 12px;
+  color:var(--ink-faint);
+  font-size:.8rem;
+  font-family:'Noto Naskh Arabic',serif;
+}
+.moon-mark{
+  position:absolute; left:0; top:50%; transform:translateY(-50%);
+  width:22px; height:22px; border-radius:50%;
+  background:var(--gold);
+  box-shadow: 8px 0 0 -6px var(--bg-1);
+  -webkit-mask: radial-gradient(circle at 60% 40%, transparent 55%, #000 56%);
+          mask: radial-gradient(circle at 60% 40%, transparent 55%, #000 56%);
+}
+.back-btn{
+  position:absolute; right:0; top:50%; transform:translateY(-50%) scaleX(-1);
+  background:var(--surface); border:1px solid var(--line); color:var(--gold);
+  width:34px; height:34px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+}
+.back-btn:active{ background:var(--surface-2); }
+
+.search-wrap{
+  position:relative; display:flex; align-items:center;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:10px 14px;
+  gap:8px;
+}
+.search-icon{ color:var(--ink-faint); flex-shrink:0; }
+#searchInput{
+  flex:1; background:transparent; border:none; outline:none;
+  color:var(--ink); font-family:'Noto Naskh Arabic',serif; font-size:.95rem;
+  min-width:0;
+}
+#searchInput::placeholder{ color:var(--ink-faint); }
+.clear-search{
+  background:none; border:none; color:var(--ink-faint); font-size:1.2rem;
+  cursor:pointer; line-height:1; padding:2px 4px;
+}
+
+/* ---------- main ---------- */
+#mainContent{
+  position:relative; z-index:1;
+  max-width:640px; margin:0 auto;
+  padding:16px 16px 90px;
+  min-height:70vh;
+}
+
+.stage-grid{
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+  margin-top:6px;
+}
+.stage-card{
+  background:linear-gradient(155deg, var(--surface) 0%, var(--surface-2) 100%);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:16px 14px;
+  text-align:center;
+  cursor:pointer;
+  position:relative;
+  box-shadow:var(--shadow);
+  transition:transform .15s ease, border-color .15s ease;
+}
+.stage-card:active{ transform:scale(.97); border-color:var(--gold-dim); }
+.stage-card .stage-num{
+  font-family:'Noto Nastaliq Urdu',serif;
+  font-size:1.9rem; color:var(--gold); font-weight:700; line-height:1;
+  margin-bottom:6px;
+}
+.stage-card .stage-name{
+  font-size:.88rem; color:var(--ink); line-height:1.5;
+  min-height:2.7em; display:flex; align-items:center; justify-content:center;
+}
+.stage-card .stage-count{
+  margin-top:8px; font-size:.72rem; color:var(--ink-faint);
+  border-top:1px dashed var(--line); padding-top:6px;
+}
+
+.footer-note{
+  color:var(--ink-faint); font-size:.78rem; text-align:center;
+  margin:26px auto 0; max-width:480px; line-height:1.9;
+}
+
+/* ---------- stage / list view ---------- */
+.stage-band{
+  background:linear-gradient(155deg, var(--surface) 0%, var(--surface-2) 100%);
+  border:1px solid var(--line); border-radius:var(--radius);
+  padding:16px; margin-bottom:14px; text-align:center;
+  box-shadow:var(--shadow);
+}
+.stage-band .band-num{ font-family:'Noto Nastaliq Urdu',serif; color:var(--gold); font-size:1.4rem; }
+.stage-band .band-name{ color:var(--ink); font-size:1rem; margin-top:4px; }
+.stage-band .band-range{ color:var(--ink-faint); font-size:.75rem; margin-top:6px; }
+
+.entry-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; }
+.entry-row{
+  display:flex; align-items:center; gap:12px;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px 14px;
+  cursor:pointer;
+}
+.entry-row:active{ background:var(--surface-2); }
+.entry-row .row-num{
+  font-family:'Noto Nastaliq Urdu',serif; color:var(--gold-soft);
+  font-size:1rem; min-width:2.2em; text-align:center; flex-shrink:0;
+}
+.entry-row .row-body{ flex:1; min-width:0; }
+.entry-row .row-title{ color:var(--ink); font-size:.98rem; }
+.entry-row .row-meaning{
+  color:var(--ink-faint); font-size:.78rem; margin-top:2px;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+.entry-row .row-stage{
+  color:var(--teal); font-size:.68rem; flex-shrink:0; background:rgba(127,168,184,.12);
+  padding:3px 8px; border-radius:999px; border:1px solid rgba(127,168,184,.25);
+}
+
+.search-status{ color:var(--ink-faint); font-size:.82rem; margin:4px 2px 12px; }
+
+/* ---------- entry modal (manuscript page) ---------- */
+.entry-modal{
+  position:fixed; inset:0; z-index:50;
+  display:flex; align-items:flex-end; justify-content:center;
+}
+.entry-modal[hidden]{ display:none; }
+.entry-modal-backdrop{
+  position:absolute; inset:0; background:rgba(6,10,20,.72); backdrop-filter:blur(2px);
+}
+.entry-card{
+  position:relative; z-index:1;
+  width:100%; max-width:640px;
+  background:linear-gradient(170deg, #1c2a4d 0%, #141f3c 100%);
+  border:1px solid var(--gold-dim);
+  border-bottom:none;
+  border-radius:22px 22px 0 0;
+  padding:26px 22px 34px;
+  box-shadow:0 -12px 40px rgba(0,0,0,.5);
+  animation:slideUp .22s ease-out;
+  max-height:82vh; overflow-y:auto;
+}
+@media (min-width:680px){
+  .entry-modal{ align-items:center; }
+  .entry-card{ border-radius:22px; border-bottom:1px solid var(--gold-dim); }
+}
+@keyframes slideUp{ from{ transform:translateY(30px); opacity:0; } to{ transform:translateY(0); opacity:1; } }
+
+.entry-close{
+  position:absolute; left:16px; top:16px;
+  width:32px; height:32px; border-radius:50%;
+  background:var(--surface); border:1px solid var(--line); color:var(--ink-dim);
+  font-size:1.3rem; line-height:1; cursor:pointer;
+}
+.entry-card-num{
+  text-align:center; color:var(--gold-soft); font-size:.8rem; letter-spacing:1px;
+  margin-bottom:6px;
+}
+.entry-card-title{
+  font-family:'Noto Nastaliq Urdu',serif;
+  color:var(--gold); text-align:center; font-size:1.7rem; margin:0 0 14px; line-height:1.4;
+}
+.page-divider{ display:flex; justify-content:center; color:var(--gold-dim); margin:10px auto 18px; }
+.entry-card-meaning{
+  color:var(--ink); font-size:1.08rem; line-height:2.1; text-align:center;
+  max-width:480px; margin:0 auto;
+}
+.entry-card-stage{
+  text-align:center; margin-top:20px; color:var(--teal); font-size:.78rem;
+}
+
+/* ---------- loading ---------- */
+.loading-state{
+  position:fixed; inset:0; z-index:40;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;
+  background:var(--bg-0); color:var(--ink-faint); font-size:.9rem;
+}
+.loading-state[hidden]{ display:none; }
+.moon-loader{
+  width:40px; height:40px; border-radius:50%; background:var(--gold);
+  -webkit-mask: radial-gradient(circle at 65% 35%, transparent 55%, #000 56%);
+          mask: radial-gradient(circle at 65% 35%, transparent 55%, #000 56%);
+}
+
+/* ---------- footer ---------- */
+.app-footer{
+  position:fixed; bottom:0; left:0; right:0; z-index:15;
+  text-align:center; padding:8px 10px; font-size:.68rem;
+  color:var(--ink-faint);
+  background:linear-gradient(0deg, rgba(10,17,32,.96) 60%, rgba(10,17,32,0) 100%);
+}
+
+/* ---------- empty state ---------- */
+.empty-state{
+  text-align:center; color:var(--ink-faint); padding:40px 20px; font-size:.9rem; line-height:1.8;
+}
+
+:focus-visible{ outline:2px solid var(--gold); outline-offset:2px; }
+
+@media (min-width:480px){
+  .stage-grid{ grid-template-columns:1fr 1fr 1fr; }
+}
